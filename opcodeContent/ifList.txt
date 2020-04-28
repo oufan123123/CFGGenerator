@@ -1,0 +1,12 @@
+if-eq
+if-ne
+if-lt
+if-ge
+if-gt
+if-le
+if-eqz
+if-nez
+if-ltz
+if-gez
+if-gtz
+if-lez

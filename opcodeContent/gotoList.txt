@@ -1,0 +1,3 @@
+goto
+goto/16
+goto/32
