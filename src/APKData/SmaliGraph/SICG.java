@@ -4,12 +4,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 import APKData.APKTool;
 import APKData.ReduceGraph.ReduceGraph;
+import APKData.SmaliData.SmaliClass;
+import APKData.SmaliData.SmaliMethod;
 import Util.Tool.DirDelete;
 import brut.directory.DirectoryException;
 
@@ -30,19 +30,34 @@ public class SICG {
 		private String apkFileString;
 		private String outFileString;
 		private String writeFileString;
+
+
+		private Map<String, SmaliMethod> smaliMethodMap;
 		public SICG(String inAPKFileString, String outFileString) throws DirectoryException, IOException{
 			this.apkFileString=inAPKFileString;
 			this.outFileString=outFileString;
 			apktool();  // 用apktool反编译到输出目录
 			iniGraph();  // 构建初始化FCG图，未删减版本,分析代码显示是一个有向图，
-			newSICGFile();  // 创建输出SICG文件夹目录，后序分析得到的东西存在
-			writeInformationTXT();
-			writeSourceTXT();
-			writeSinkTXT();
-			writeSourceGraphGexf();
-			writeReducedGraphGexf();
-			writeGraphDotFile();
-			deleteMoreFile();
+			// 插入一个得到cfg的函数
+
+			smaliMethodMap = new HashMap<>();
+			// 生成一个方法的键---方法对象的值对，好让cfg中invoke操作码存储的调用对象找到这个方法对象，然后来转化得到中间调用边
+			generateMethodMap();
+			// 用于生成中间调用边，可以考虑使用或者不用
+			generateInterCall();
+			//testOneMethod();
+
+			//newSICGFile();  // 创建输出SICG文件夹目录，后序分析得到的东西存在
+			//writeInformationTXT();
+			//writeSourceTXT();
+			//writeSinkTXT();
+			//writeSourceGraphGexf();
+			//writeReducedGraphGexf();
+			//writeGraphDotFile();
+
+
+			//deleteMoreFile();
+
 		}
 		/*
 		 *   删除多余的文件，如反编译后的源码文件夹以及资源文件夹
@@ -166,5 +181,61 @@ public class SICG {
 			String writeString=this.writeFileString+"ReducedGraph.dot";
 			GraphToDot graphToDot=new GraphToDot(this.reduceGraph, writeString);
 			System.out.println("Finish writing ReducedGraph.dot");
+		}
+
+		public void generateMethodMap() {
+			List<SmaliClass> classList = graph.getSmaliClassList();
+			if (classList == null || classList.size() == 0) {
+				return;
+			}
+			System.out.println("class大小:"+classList.size());
+			for (SmaliClass smaliClass:classList) {
+				List<SmaliMethod> methodList = smaliClass.getMethodList();
+				if (methodList == null || methodList.size() == 0) {
+					continue;
+				}
+
+				for (SmaliMethod smaliMethod:methodList) {
+					if (smaliMethod.getMethodNameString().contains("onOptionsItemSelected")) {
+						System.out.println("putedcalleeString:"+smaliMethod.getMethodPackageString()+"-"+smaliMethod.getMethodNameString());
+					}
+					smaliMethodMap.put(smaliMethod.getMethodPackageString()+"-"+smaliMethod.getMethodNameString()+"-"+smaliMethod.getMethodArgsString(), smaliMethod);
+				}
+			}
+		}
+
+		public void generateInterCall() {
+			List<SmaliClass> classList = graph.getSmaliClassList();
+			if (classList == null || classList.size() == 0) {
+				return;
+			}
+			for (SmaliClass smaliClass:classList) {
+				List<SmaliMethod> methodList = smaliClass.getMethodList();
+				if (methodList == null || methodList.size() == 0) {
+					continue;
+				}
+				for (SmaliMethod smaliMethod:methodList) {
+					smaliMethod.generateInterCall(smaliMethodMap);
+				}
+			}
+		}
+
+		public void testOneMethod() {
+			List<SmaliClass> classList = graph.getSmaliClassList();
+			if (classList == null || classList.size() == 0) {
+				return;
+			}
+			for (SmaliClass smaliClass:classList) {
+				List<SmaliMethod> methodList = smaliClass.getMethodList();
+				if (methodList == null || methodList.size() == 0) {
+					continue;
+				}
+				for (SmaliMethod smaliMethod:methodList) {
+					if (smaliMethod.getMethodNameString().contains("onOptionsItemSelected")) {
+						GraphToGexf g = new GraphToGexf(smaliMethod.getCfgGraph(), "F:\\CfgDfgGenerator\\cfgGraph\\onOptionsItemSelected.gexf");
+					}
+
+				}
+			}
 		}
 }

@@ -30,14 +30,17 @@ public class MethodGraph implements Serializable{
 			private Set<String> edgeNameSet=new HashSet<>();
 			
 			private Map<String, MethodNode> nodeMap=new HashMap<>();
+
+
 			public MethodGraph(){}
 			public MethodGraph(File file){
 				this.filePathString=file.getAbsolutePath();
 				SmaliDir dir=new SmaliDir(file);
 				smaliClassList=dir.getClassesList();
-				iniNodeAndEdge();
-				iniChildrenNodesAndParentNodes();
-				statisticCategoryNum();
+				//iniNodeAndEdge();
+				//iniChildrenNodesAndParentNodes();
+				//statisticCategoryNum();
+
 			}
 			public void iniNodeAndEdge(){
 				for(int i=0;i<smaliClassList.size();i++){

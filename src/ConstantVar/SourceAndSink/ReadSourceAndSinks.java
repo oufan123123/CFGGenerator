@@ -29,8 +29,8 @@ public class ReadSourceAndSinks {
 	private static Map<String, Integer> categorySinkMap;
 	private static Map<String, Integer> sameMethodNameSourceMap;
 	private static Map<String, Integer> sameMethodNameSinkMap;
-	private static ArrayList<Map.Entry<String, Integer>> sameMethodNameSourceList;  // sorted
-	private static ArrayList<Map.Entry<String, Integer>> sameMethodNameSinkList;	//sorted
+	private static ArrayList<Entry<String, Integer>> sameMethodNameSourceList;  // sorted
+	private static ArrayList<Entry<String, Integer>> sameMethodNameSinkList;	//sorted
 	
 	public ReadSourceAndSinks(String sourcePath,String sinkPath){
 		categorySourceMap=new HashMap<>();
@@ -150,7 +150,7 @@ public class ReadSourceAndSinks {
 		categorySinkNum=categorySinkMap.keySet().size();
 		
 		sameMethodNameSourceList=new ArrayList<>(sameMethodNameSourceMap.entrySet());
-		Collections.sort(sameMethodNameSourceList, new Comparator<Map.Entry<String, Integer>>() {
+		Collections.sort(sameMethodNameSourceList, new Comparator<Entry<String, Integer>>() {
 
 			@Override
 			public int compare(Entry<String, Integer> o1,
@@ -161,7 +161,7 @@ public class ReadSourceAndSinks {
 			
 		});
 		sameMethodNameSinkList=new ArrayList<>(sameMethodNameSinkMap.entrySet());
-		Collections.sort(sameMethodNameSinkList, new Comparator<Map.Entry<String, Integer>>() {
+		Collections.sort(sameMethodNameSinkList, new Comparator<Entry<String, Integer>>() {
 
 			@Override
 			public int compare(Entry<String, Integer> o1,
@@ -282,18 +282,18 @@ public class ReadSourceAndSinks {
 			Map<String, Integer> sameMethodNameSinkMap) {
 		ReadSourceAndSinks.sameMethodNameSinkMap = sameMethodNameSinkMap;
 	}
-	public static ArrayList<Map.Entry<String, Integer>> getSameMethodNameSourceList() {
+	public static ArrayList<Entry<String, Integer>> getSameMethodNameSourceList() {
 		return sameMethodNameSourceList;
 	}
 	public static void setSameMethodNameSourceList(
-			ArrayList<Map.Entry<String, Integer>> sameMethodNameSourceList) {
+			ArrayList<Entry<String, Integer>> sameMethodNameSourceList) {
 		ReadSourceAndSinks.sameMethodNameSourceList = sameMethodNameSourceList;
 	}
-	public static ArrayList<Map.Entry<String, Integer>> getSameMethodNameSinkList() {
+	public static ArrayList<Entry<String, Integer>> getSameMethodNameSinkList() {
 		return sameMethodNameSinkList;
 	}
 	public static void setSameMethodNameSinkList(
-			ArrayList<Map.Entry<String, Integer>> sameMethodNameSinkList) {
+			ArrayList<Entry<String, Integer>> sameMethodNameSinkList) {
 		ReadSourceAndSinks.sameMethodNameSinkList = sameMethodNameSinkList;
 	}
 	

@@ -10,7 +10,6 @@ import java.util.Set;
 import APKData.SmaliData.SmaliMethod;
 import ConstantVar.ConstantValue;
 import ConstantVar.SourceAndSink.ReadSourceAndSinks;
-import ConstantVar.SourceAndSink.SSMethod;
 
 public class MethodNode implements Serializable{
 	private SmaliMethod nodeMethod;

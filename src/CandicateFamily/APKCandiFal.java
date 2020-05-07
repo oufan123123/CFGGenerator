@@ -20,7 +20,7 @@ public class APKCandiFal {
 		private String predictFamilyString="";
 		private ArrayList<String> sensitiveMethodsList=new ArrayList<>();
 		private Map<String, Double> simFamilyScoreMap=new HashMap<String, Double>();
-		private List<Map.Entry<String, Double>> candicateFamilyList=new ArrayList<>();
+		private List<Entry<String, Double>> candicateFamilyList=new ArrayList<>();
 		private boolean inCandicateFal=false;
 		private int cadicateIndex=-1;
 		public APKCandiFal(String apkString){
@@ -113,8 +113,8 @@ public class APKCandiFal {
 			}
 			return simScore;
 		}
-		public List<Map.Entry<String, Double>> getCandicateFamilyList(){
-			List<Map.Entry<String, Double>> familySimScoreList=new ArrayList<>();
+		public List<Entry<String, Double>> getCandicateFamilyList(){
+			List<Entry<String, Double>> familySimScoreList=new ArrayList<>();
 			MapSort<String, Double> mapSort=new MapSort<>();
 			familySimScoreList=mapSort.sortMapByValue(simFamilyScoreMap);
 			ConstantValue.getVar();
@@ -185,7 +185,7 @@ public class APKCandiFal {
 			this.cadicateIndex = cadicateIndex;
 		}
 		public void setCandicateFamilyList(
-				List<Map.Entry<String, Double>> candicateFamilyList) {
+				List<Entry<String, Double>> candicateFamilyList) {
 			this.candicateFamilyList = candicateFamilyList;
 		}
 		

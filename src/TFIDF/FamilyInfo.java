@@ -19,8 +19,8 @@ public class FamilyInfo {
 		private ArrayList<APKInfo> apkInfoList=new ArrayList<>();
 		private Map<SensitiveMethod, Integer> methodNumberMap=new HashMap<>();
 		private Map<SensitiveMethod, Double> methodWeightMap=new HashMap<>();
-		private List<Map.Entry<SensitiveMethod, Integer>> methodNumberList=new ArrayList<>();
-		private List<Map.Entry<SensitiveMethod, Double>> methodWeightList=new ArrayList<>();
+		private List<Entry<SensitiveMethod, Integer>> methodNumberList=new ArrayList<>();
+		private List<Entry<SensitiveMethod, Double>> methodWeightList=new ArrayList<>();
 		
 		
 		public FamilyInfo(String dirPathString){
@@ -168,18 +168,18 @@ public class FamilyInfo {
 		public void setMethodWeightMap(Map<SensitiveMethod, Double> methodWeightMap) {
 			this.methodWeightMap = methodWeightMap;
 		}
-		public List<Map.Entry<SensitiveMethod, Integer>> getMethodNumberList() {
+		public List<Entry<SensitiveMethod, Integer>> getMethodNumberList() {
 			return methodNumberList;
 		}
 		public void setMethodNumberList(
-				List<Map.Entry<SensitiveMethod, Integer>> methodNumberList) {
+				List<Entry<SensitiveMethod, Integer>> methodNumberList) {
 			this.methodNumberList = methodNumberList;
 		}
-		public List<Map.Entry<SensitiveMethod, Double>> getMethodWeightList() {
+		public List<Entry<SensitiveMethod, Double>> getMethodWeightList() {
 			return methodWeightList;
 		}
 		public void setMethodWeightList(
-				List<Map.Entry<SensitiveMethod, Double>> methodWeightList) {
+				List<Entry<SensitiveMethod, Double>> methodWeightList) {
 			this.methodWeightList = methodWeightList;
 		}
 		

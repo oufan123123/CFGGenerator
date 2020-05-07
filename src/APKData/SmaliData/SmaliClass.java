@@ -6,7 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
+import APKData.SmaliGraph.GraphToGexf;
+import Logger.LogFatory;
 /*
  *   输入为一个smali文件，分析其内部代码，获取函数节点及其调用关系
  * 
@@ -19,6 +22,7 @@ public class SmaliClass implements Serializable{
 	private  FileReader fReader;
 	private  BufferedReader bReader;
 	private  String lineString;
+	private Logger log = LogFatory.getGlobalLogger();
 	public SmaliClass(){}
 	public SmaliClass(File file){
 		 try {
@@ -67,8 +71,8 @@ public class SmaliClass implements Serializable{
 				  	tmpMethod.addSmaliCode(lineString);
 
 				  	methodList.add(tmpMethod);
-			  }
-			  catch (IOException e) {
+				 // log.info("结束一个method读取： 标识"+lineString);
+			  } catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -80,6 +84,10 @@ public class SmaliClass implements Serializable{
 		if(methodList.size()>0){
 			for(int i=0;i<methodList.size();i++){
 				methodList.get(i).extractCallInformation();
+
+				methodList.get(i).getOpcodeMap();
+				methodList.get(i).analyse();
+				//methodList.get(i).analyse();
 			}
 		}
 	}
